@@ -90,15 +90,21 @@
         .timeline-title { color: var(--inv-accent); font-weight: bold; font-size: 15px; margin-bottom: 5px; }
         .timeline-text { font-size: 13px; line-height: 1.5; color: #49312b; margin: 0; }
 
-        /* GALERI GRID */
-        .gallery-wrapper { width: 100%; max-height: 55vh; overflow-y: auto; padding: 5px; }
+        /* GALERI KOLASE (MASONRY) - foto portrait menyesuaikan rasio aslinya */
+        .gallery-wrapper { width: 100%; max-height: 62vh; overflow-y: auto; padding: 5px; -webkit-overflow-scrolling: touch; }
         .gallery-wrapper::-webkit-scrollbar { width: 4px; }
         .gallery-wrapper::-webkit-scrollbar-thumb { background: var(--inv-accent); border-radius: 4px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-        .gallery-item { border-radius: 8px; overflow: hidden; aspect-ratio: 1 / 1; box-shadow: 0 3px 6px rgba(0,0,0,0.1); background: #eee; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-        .gallery-item.large { grid-column: span 2; aspect-ratio: 16 / 9; }
-        .gallery-item.tall { grid-row: span 2; aspect-ratio: 3 / 4; }
+        .gallery-grid { column-count: 2; column-gap: 10px; width: 100%; }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            background: #eee;
+            border: 2px solid var(--inv-border);
+        }
+        .gallery-item img { width: 100%; height: auto; display: block; }
 
         /* COMMENT BOX */
         #commentsList { padding-right: 8px; }
@@ -113,19 +119,12 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
-
         /* FIX MENU BAWAH: disembunyikan saat cover/opening tanpa merusak posisi tombol */
         .canvas.not-open #smMenu,
         .canvas.not-open .floating-action {
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
-        }
-
-        /* Tambahan kecil untuk foto portrait baru, tanpa mengubah susunan galeri awal */
-        .gallery-item.portrait-tambahan {
-            grid-row: span 2;
-            aspect-ratio: 3 / 4;
         }
     </style>
 </head>
@@ -144,508 +143,440 @@
                         <div id="satuMomen" data-guest="" data-group="">
                             <div class="satumomen_track">
                                 <ul class="satumomen_list">
-                                    <!-- SLIDE 1 COVER -->
-                                    <li class="satumomen_slide satumomen_cover">
-                                        <div class="container-mobile cover" style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;">
-                                                <img class="w-100 animate__animated animate__zoomIn animate__slower" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame" style="animation-delay: 1.5s;">
-                                              </div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow">
-                                                <div class="animate-left" style="transform: translate(-5%, 145%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 120ms;">
-                                                </div>
-                                              </div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow">
-                                                <div class="animate-right" style="transform: translate(5%, 145%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 120ms;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2.5s;">
-                                                <div class="animate-left" style="transform: translate(-29%, -85%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2.2s;">
-                                                <div class="animate-left" style="transform: translate(-27%, -87%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 100ms;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2s;">
-                                                <div class="animate-left" style="transform: translate(-16%, -70%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 300ms;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2.5s;">
-                                                <div class="animate-right" style="transform: translate(29%, -85%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2.2s;">
-                                                <div class="animate-right" style="transform: translate(27%, -87%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 100ms;">
-                                                </div>
-                                              </div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2s;">
-                                                <div class="animate-right" style="transform: translate(16%, -70%);">
-                                                  <img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 300ms;">
-                                                </div>
-                                              </div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center align-items-center" style="height:100%;width:100%;background-size:cover;z-index:2;position:relative;"><div class="w-100 pt-5"> <div class="text-center animate__animated animate__zoomIn animate__slower mt-5 mb-3" style="line-height:1;"><div class="editable mb-2" style="font-size:14.4px;">The Wedding Of</div><div class="color-accent editable font-latin" style="font-size:80px;">Diah</div><div class="editable font-latin mb-2" style="font-size:30px;">&</div><div class="color-accent editable mb-2 font-latin" style="font-size:80px;">Didik</div></div><div class="text-center mx-auto" style="max-width:280px;"><div class="text-center mb-3 py-3 px-2 animate__animated animate__zoomIn animate__slower" style="background-color:rgb(225 219 203 / 67%);border:2px solid var(--inv-border);border-radius:.5rem;"><div class="editable mb-1 animate__animated animate__fadeInUp animate__slower" style="font-size:14px;">Kepada Yth;<br />Bapak/Ibu/Saudara/i</div> <div id="guestNameSlot" class="editable color-accent h5 font-weight-bold mb-1 animate__animated animate__fadeInUp animate__slower" style="font-size:16px;">Nama Tamu</div></div><button id="btn-open-manual" class="btn-open-invitation btn btn-primary rounded-pill mb-4 animate__animated animate__fadeInUp animate__slow" style="font-size:14px;">Open Invitation</button></div></div></div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 2 PEMBUKAAN -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="position-relative h-100 w-100 flex-column d-flex justify-content-center align-items-center px-4" style="padding-bottom:10%;">
-                                                <div class="text-center editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:35px; font-weight:bold; font-family: 'Brittany Signature', serif;">Pembukaan</div>
-                                                <div class="text-center editable mb-3 animate__animated animate__fadeInDown animate__slower color-accent font-weight-bold" style="font-size:16px;">Assalamu’alaikum Warahmatullahi Wabarakatuh</div>
-                                                <div class="text-center editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:14px; font-style: italic;">"Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami."</div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 3 QUOTES -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="h-100 d-flex flex-column justify-content-center align-items-center px-4">
-                                                <div class="animate__animated animate__fadeInDown animate__slower">
-                                                    <div class="image-editable" style="width:100px;margin:auto;overflow:hidden;padding-bottom:15px;">
-                                                        <img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" style="width: 100%; height: 100%; object-fit: contain;" />
-                                                    </div>
-                                                </div> 
-                                                <div class="text-center">
-                                                    <div class="editable mb-4 font-weight-bold animate__animated animate__fadeInDown animate__slower" style="font-size:14.4px;">✤ QS. Ar-Rum : 21 ✤</div>
-                                                    <div class="color-accent editable quotes mb-3 animate__animated animate__zoomIn animate__slower" style="font-size:22px; line-height: 1.5;">وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً</div>
-                                                    <div class="editable quotes animate__animated animate__fadeInUp animate__slower" style="font-size:13px; font-style: italic;">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 4 PROFIL MEMPELAI -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center align-items-center" style="height:100%;">
-                                                <div>
-                                                    <div class="image-editable mb-3 animate__animated animate__fadeInLeft animate__slower" style="height:100px;width:100px;margin:auto;border-radius:100%;overflow:hidden; border: 3px solid var(--inv-accent);">
-                                                        <img src="https://assets.satumomen.com/assets/female-1-1687991981.webp" style="width: 100%;height: 100%;object-fit: cover;" alt="Pengantin Wanita" />
-                                                    </div>
-                                                    <div class="text-center animate__animated animate__fadeInLeft animate__slower" style="position:relative;">
-                                                        <div class="editable color-accent h4 mb-2 font-accent" style="font-size:24px;">Diah Restu Sulistia Ningsih, S.Ak</div>
-                                                        <div class="editable" style="font-size:14.4px;">Putri Kedua</div>
-                                                    </div>
-                                                    <div class="editable mb-3 text-center animate__animated animate__fadeIn animate__slower font-photograph-signature" style="font-size:40px;">dengan</div>
-                                                    <div class="text-center animate__animated animate__fadeInRight animate__slower" style="position:relative;">
-                                                        <div class="editable color-accent h4 mb-2 font-accent" style="font-size:24px;">Didik Marwanto</div>
-                                                        <div class="editable mb-1" style="font-size:14.4px;">Putra Kedua</div>
-                                                    </div>
-                                                    <div class="image-editable mt-3 animate__animated animate__fadeInRight animate__slower" style="height:100px;width:100px;margin:auto;border-radius:100%;overflow:hidden; border: 3px solid var(--inv-accent);">
-                                                        <img src="https://assets.satumomen.com/assets/male-1-1687991959.webp" style="width: 100%;height: 100%;object-fit: cover;" alt="Pengantin Pria" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 5 AKAD -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center flex-column align-items-center" style="height:100%;">
-                                                <div class="animate__animated animate__fadeInDown animate__slower">
-                                                    <div class="image-editable" style="width:158px;height:89px;margin:auto;overflow:hidden;padding-bottom:20px;">
-                                                        <img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" alt="Ornamen" style="width: 100%; height: 100%; object-fit: contain;" />
-                                                    </div>
-                                                </div>
-                                                <div class="text-center animate__animated animate__fadeInDown animate__slower">
-                                                    <div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Akad Pernikahan ✤</div> 
-                                                    <div class="editable" style="font-size:14px;">Pukul 08.00 WIB - Selesai</div>
-                                                </div>
-                                                <div class="mt-3 text-center animate__animated animate__zoomIn animate__slower">
-                                                    <div class="editable font-latin" style="font-size:50px;line-height:1.2;">Sabtu</div>
-                                                    <div class="editable color-accent font-accent" style="font-size:50px;line-height:1.2;">26.12.26</div>
-                                                </div>
-                                                <div class="mt-2 text-center animate__animated animate__zoomIn animate__slower px-4">
-                                                    <div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Kediaman Mempelai Wanita ✤</div> 
-                                                    <div class="editable" style="font-size:14px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div>
-                                                </div> 
-                                                <div class="mt-3 image-editable mx-auto animate__animated animate__fadeInUp animate__slower" style="height:auto;width:130px;overflow:hidden;">
-                                                    <img src="https://assets.satumomen.com/images/galleries/301467-gallery-FMgCPTNp2h.png" alt="Bunga" style="width: 100%; height: 100%; object-fit: contain;" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 6 RESEPSI -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center flex-column align-items-center" style="height:100%;">
-                                                <div class="animate__animated animate__fadeInDown animate__slower">
-                                                    <div class="image-editable" style="width:158px;height:89px;margin:auto;overflow:hidden;padding-bottom:20px;">
-                                                        <img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" alt="Ornamen" style="width: 100%; height: 100%; object-fit: contain;" />
-                                                    </div>
-                                                </div>
-                                                <div class="text-center animate__animated animate__fadeInDown animate__slower">
-                                                    <div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Resepsi Pernikahan ✤</div> 
-                                                    <div class="editable" style="font-size:14px;">Pukul 11.00 WIB - Selesai</div>
-                                                </div>
-                                                <div class="mt-3 text-center animate__animated animate__zoomIn animate__slower">
-                                                    <div class="editable font-latin" style="font-size:50px;line-height:1.2;">Sabtu</div>
-                                                    <div class="editable color-accent font-accent" style="font-size:50px;line-height:1.2;">26.12.26</div>
-                                                </div>
-                                                <div class="mt-2 text-center animate__animated animate__zoomIn animate__slower px-4">
-                                                    <div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Kediaman Mempelai Wanita ✤</div> 
-                                                    <div class="editable" style="font-size:14px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div>
-                                                </div> 
-                                                <div class="mt-3 image-editable mx-auto animate__animated animate__fadeInUp animate__slower" style="height:auto;width:130px;overflow:hidden;">
-                                                    <img src="https://assets.satumomen.com/images/galleries/301467-gallery-FMgCPTNp2h.png" alt="Bunga" style="width: 100%; height: 100%; object-fit: contain;" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 7 MAPS LOKASI -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center align-items-center" style="height:100%; padding: 0 15px;">
-                                                <div style="width:100%;">
-                                                    <div class="text-center animate__animated animate__fadeInDown animate__slow">
-                                                        <div style="font-family: 'javassoul', sans-serif;font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #b88821; text-transform: uppercase; letter-spacing: 1px;">Scan here for location</div>
-                                                        <div style="width:100%; max-width: 280px; margin:auto;border-radius:10px;overflow:hidden;margin-bottom:20px;padding-bottom:100%;position:relative;background-color:#ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" class="animate__animated animate__zoomIn animate__slow">
-                                                            <img src="https://cdn.yupra.my.id/yp/zu3vsmiw.png" alt="QR Code Lokasi Pernikahan" style="width: 100%; height: 100%; object-fit: contain; border: 0; position: absolute; top: 0; left: 0; padding: 20px;">
-                                                        </div>
-                                                        <div class="text-center animate__animated animate__fadeInUp animate__slow">
-                                                            <div class="editable font-weight-bold" style="font-size:14px;">Kediaman Mempelai Wanita</div>
-                                                            <div class="editable mb-3" style="font-size:13px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div> 
-                                                            <a href="https://maps.app.goo.gl/xLpyjrwHiHwbPVBFA" class="btn-maps-link mx-auto btn btn-primary rounded-pill animate__animated animate__fadeInUp animate__slow" target="_blank" style="gap:8px;max-width:200px; background-color: #b88821; border-color: #b88821; box-shadow: 0 4px 6px rgba(184, 136, 33, 0.3);" rel="noreferrer noopener"><i class="ph-fill ph-map-pin"></i> Petunjuk Ke Lokasi</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 8 OUR LOVE STORY -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center flex-column align-items-center px-2" style="height:100%;">
-                                                <div class="editable font-latin color-accent mb-3 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:40px; margin-top: 10px;">Our Love Story</div>
-                                                
-                                                <div class="story-wrapper animate__animated animate__fadeInUp animate__slower">
-                                                    <div class="timeline-container">
-                                                        <div class="timeline-item">
-                                                            <div class="timeline-title">Satu Desa</div>
-                                                            <p class="timeline-text">Satu desa, beda RT. Satu sekolah, sebangku kenangan. Kita berteman, bermain, tumbuh tanpa rencana. Tanpa tahu kelak akan berbagi nama yang sama.</p>
-                                                        </div>
-                                                        <div class="timeline-item">
-                                                            <div class="timeline-title">Dipertemukan Kembali (2019)</div>
-                                                            <p class="timeline-text">Semesta mempertemukan kami kembali pada suatu momen. Obrolan kecil tumbuh jadi rasa yang tak kecil lagi. Sejak hari itu, chat tak pernah sepi, intens, nyaman. Dan pelan-pelan jadi rumah.</p>
-                                                        </div>
-                                                        <div class="timeline-item">
-                                                            <div class="timeline-title">Tunangan (17 Agustus 2024)</div>
-                                                            <p class="timeline-text">Di hari merdeka, Didik memerdekakan hatinya.<br>“Maukah kamu jadi teman hidupku, sampai tua?”<br>Diah mengangguk, dengan seluruh yakin.</p>
-                                                        </div>
-                                                        <div class="timeline-item">
-                                                            <div class="timeline-title">Menikah (26 Desember 2026)</div>
-                                                            <p class="timeline-text">Bismillah, kami menyatukan dua nama, dua doa.<br>Dari teman kecil yang pernah tak saling sapa, kini jadi teman surga yang tak akan berpisah.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 9 GALERI PRE-WEDDING -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center flex-column align-items-center px-3" style="height:100%;">
-                                                <div class="editable font-latin color-accent mb-3 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:36px; margin-top: 15px;">Momen Pre-wedding</div>
-                                                
-                                                <div class="gallery-wrapper animate__animated animate__zoomIn animate__slower">
-                                                    <div class="gallery-grid">
-                                                        <!-- SUSUNAN GAMBAR AWAL: JANGAN DIUBAH -->
-                                                        <div class="gallery-item large"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=600&h=300" alt="Prewedding 1"></div>
-                                                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=300&h=300" alt="Prewedding 2"></div>
-                                                        <div class="gallery-item tall"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=300&h=600" alt="Prewedding 3"></div>
-                                                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=300&h=300" alt="Prewedding 4"></div>
-                                                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=300&h=300" alt="Prewedding 5"></div>
-
-                                                        <!-- FOTO PORTRAIT TAMBAHAN: mengisi area kosong kanan yang ditandai -->
-                                                        <div class="gallery-item portrait-tambahan"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400&h=800" alt="Prewedding Portrait Tambahan"></div>
-
-                                                        <!-- FOTO LAMA TETAP ADA -->
-                                                        <div class="gallery-item large"><img src="https://images.unsplash.com/photo-1532712938730-4e36c557ed20?auto=format&fit=crop&q=80&w=600&h=300" alt="Prewedding 6"></div>
-
-                                                        <!-- FOTO TAMBAHAN DI BAWAH -->
-                                                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&q=80&w=300&h=300" alt="Prewedding 7"></div>
-                                                        <div class="gallery-item tall"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&q=80&w=300&h=600" alt="Prewedding 8"></div>
-                                                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&q=80&w=300&h=300" alt="Prewedding 9"></div>
-                                                        <div class="gallery-item large"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80&w=600&h=300" alt="Prewedding 10"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-muted mt-2 animate__animated animate__fadeIn" style="font-size: 11px;">*Geser ke bawah untuk melihat lebih banyak</div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 10 RSVP & UCAPAN -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center flex-column align-items-center px-4" style="height:100%;">
-                                                <div class="editable font-latin color-accent mb-4 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:36px; animation-delay: 0.3s;">Berikan Ucapan</div>
-                                                
-                                                <!-- Efek animasi diperlambat masuknya agar tidak mengagetkan -->
-                                                <div class="w-100 bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp animate__slow" style="max-width: 400px; border: 1px solid var(--inv-border); animation-delay: 0.5s;">
-                                                    <h6 class="text-center font-weight-bold mb-3" style="color: #49312b;"><span id="totalKomentar">0</span> Ucapaan & Doa</h6>
-                                                    <form id="rsvpForm">
-                                                        <div class="form-group mb-3"><textarea id="pesanUcapan" class="form-control" rows="3" placeholder="Tulis Ucapan & Doa..." required style="background-color: #f8f9fa; border: 1px solid #ced4da; font-size: 13px;"></textarea></div>
-                                                        <div class="form-group mb-3"><select id="statusKehadiran" class="form-control" required style="background-color: #f8f9fa; border: 1px solid #ced4da; color: #6c757d; font-size: 13px;"><option value="" disabled selected>Konfirmasi Kehadiran</option><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
-                                                        <button type="submit" class="btn btn-block text-white font-weight-bold" style="background-color: var(--inv-accent); border-radius: 6px;">➤ Kirim Ucapan</button>
-                                                    </form>
-                                                    <hr class="my-4">
-                                                    <div id="commentsList" style="max-height: 250px; overflow-y: auto; text-align: left;"><div class="text-center small text-muted" id="teksKosong">Memuat ucapan...</div></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 11 WEDDING GIFT -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="d-flex justify-content-center align-items-center" style="height:100%; padding: 0 15px;">
-                                                <div style="width:100%; max-width: 320px;" class="text-center">
-                                                    <div class="font-latin color-accent h4 mb-2 editable animate__animated animate__fadeInDown animate__slower" style="font-size:28.8px;">Tanda Kasih</div>
-                                                    <div class="editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:13px; line-height: 1.5;">Terima kasih telah menambah semangat kegembiraan pernikahan kami dengan kehadiran dan hadiah indah Anda.</div>
-                                                    <div style="display:flex;gap:8px;width:100%;"><button class="btn-gift btn btn-block btn-primary rounded-pill animate__animated animate__fadeInUp animate__slow" style="width:100%;font-size:14.4px;padding: 12px; background-color: var(--inv-accent); border-color: var(--inv-accent);">Cashless (Kirim Amplop)</button></div>
-                                                    <div class="gift-container mt-3 p-4 rounded animate__animated animate__zoomIn animate__slow" style="background: rgba(255,255,255,0.8); border: 1px solid var(--inv-border);">
-                                                        <div class="d-flex flex-column align-items-center">
-                                                            <div class="d-flex align-items-center mb-3 w-100 justify-content-center"><div style="width:80px;height:50px;overflow:hidden;" class="image-editable bg-white rounded border"><img src="https://assets.satumomen.com/assets/logo-bca-biru-1687975058.png" style="width: 100%;height: 100%;object-fit: contain;" alt="BCA" /></div><div class="text-left pl-3"><div class="editable account-number font-weight-bold h5 mb-0">12345678</div><div class="editable text-muted" style="font-size:12px;">BCA : Atas Nama</div></div></div>
-                                                            <div class="d-flex align-items-center w-100 justify-content-center"><div style="width:80px;height:50px;overflow:hidden;" class="image-editable bg-white rounded border"><img src="https://assets.satumomen.com/assets/bni-1704123714.jpg" style="width: 100%;height: 100%;object-fit: contain;" alt="BNI" /></div><div class="text-left pl-3"><div class="editable account-number font-weight-bold h5 mb-0">12345678</div><div class="editable text-muted" style="font-size:12px;">BNI : Atas Nama</div></div></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <!-- SLIDE 12 PENUTUP -->
-                                    <li class="satumomen_slide">
-                                        <div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
-                                            <div class="frame">
-                                              <img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
-                                              <img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
-                                              <div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
-                                              <div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
-                                              <img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
-                                              <img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
-                                              <img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
-                                            </div>
-                                            <div class="watermark d-flex flex-column" style="height:100%; padding: 0 15px;">
-                                                <div class="mt-auto w-100 text-center">
-                                                    <div class="editable mb-3 animate__animated animate__fadeInDown animate__slower" style="font-size:14px; line-height: 1.6;">Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do'a restu kepada kedua mempelai.</div>
-                                                    <div class="editable mb-4 animate__animated animate__fadeInDown animate__slower color-accent font-weight-bold" style="font-size:16px;">Wassalamu'alaikum Warahmatullahi Wabarakatuh</div>
-                                                    <div class="text-center d-flex align-items-center justify-content-center animate__animated animate__fadeInDown animate__slow" style="gap:20px;line-height:1.2;">
-                                                        <div><div class="editable text-muted" style="font-size:12px; margin-bottom: 5px;">Keluarga Bpk.</div><div class="editable font-weight-bold" style="font-size:14px;">Nama Ayah<br />& Ibu Diah</div></div>
-                                                        <div><div class="editable text-muted" style="font-size:12px; margin-bottom: 5px;">Keluarga Bpk.</div><div class="editable font-weight-bold" style="font-size:14px;">Nama Ayah<br />& Ibu Didik</div></div>
-                                                    </div>
-                                                </div>
-                                                <div class="watermark-placeholder text-center mb-auto mb-5 pb-5"></div>
-                                            </div>
-                                        </div>
-                                    </li>
+<!-- SLIDE -->
+<li class="satumomen_slide satumomen_cover">
+<div class="container-mobile cover" style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100 animate__animated animate__zoomIn animate__slower" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame" style="animation-delay: 1.5s;"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 120ms;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 120ms;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2.5s;"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2.2s;"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 100ms;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow" style="animation-delay: 2s;"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left; animation-delay: 300ms;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2.5s;"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2.2s;"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 100ms;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow" style="animation-delay: 2s;"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right; animation-delay: 300ms;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center align-items-center" style="height:100%;width:100%;background-size:cover;z-index:2;position:relative;"><div class="w-100 pt-5"> <div class="text-center animate__animated animate__zoomIn animate__slower mt-5 mb-3" style="line-height:1;"><div class="editable mb-2" style="font-size:14.4px;">The Wedding Of</div><div class="color-accent editable font-latin" style="font-size:80px;">Diah</div><div class="editable font-latin mb-2" style="font-size:30px;">&</div><div class="color-accent editable mb-2 font-latin" style="font-size:80px;">Didik</div></div><div class="text-center mx-auto" style="max-width:280px;"><div class="text-center mb-3 py-3 px-2 animate__animated animate__zoomIn animate__slower" style="background-color:rgb(225 219 203 / 67%);border:2px solid var(--inv-border);border-radius:.5rem;"><div class="editable mb-1 animate__animated animate__fadeInUp animate__slower" style="font-size:14px;">Kepada Yth;<br />Bapak/Ibu/Saudara/i</div> <div id="guestNameSlot" class="editable color-accent h5 font-weight-bold mb-1 animate__animated animate__fadeInUp animate__slower" style="font-size:16px;">Nama Tamu</div></div><button id="btn-open-manual" class="btn-open-invitation btn btn-primary rounded-pill mb-4 animate__animated animate__fadeInUp animate__slow" style="font-size:14px;">Open Invitation</button></div></div></div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="position-relative h-100 w-100 flex-column d-flex justify-content-center align-items-center px-4" style="padding-bottom:10%;">
+<div class="text-center editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:35px; font-weight:bold; font-family: 'Brittany Signature', serif;">Pembukaan</div>
+<div class="text-center editable mb-3 animate__animated animate__fadeInDown animate__slower color-accent font-weight-bold" style="font-size:16px;">Assalamu’alaikum Warahmatullahi Wabarakatuh</div>
+<div class="text-center editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:14px; font-style: italic;">"Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami."</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="h-100 d-flex flex-column justify-content-center align-items-center px-4">
+<div class="animate__animated animate__fadeInDown animate__slower">
+<div class="image-editable" style="width:100px;margin:auto;overflow:hidden;padding-bottom:15px;">
+<img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+</div>
+<div class="text-center">
+<div class="editable mb-4 font-weight-bold animate__animated animate__fadeInDown animate__slower" style="font-size:14.4px;">✤ QS. Ar-Rum : 21 ✤</div>
+<div class="color-accent editable quotes mb-3 animate__animated animate__zoomIn animate__slower" style="font-size:22px; line-height: 1.5;">وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً</div>
+<div class="editable quotes animate__animated animate__fadeInUp animate__slower" style="font-size:13px; font-style: italic;">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center align-items-center" style="height:100%;">
+<div>
+<div class="image-editable mb-3 animate__animated animate__fadeInLeft animate__slower" style="height:100px;width:100px;margin:auto;border-radius:100%;overflow:hidden; border: 3px solid var(--inv-accent);">
+<img src="https://assets.satumomen.com/assets/female-1-1687991981.webp" style="width: 100%;height: 100%;object-fit: cover;" alt="Pengantin Wanita" />
+</div>
+<div class="text-center animate__animated animate__fadeInLeft animate__slower" style="position:relative;">
+<div class="editable color-accent h4 mb-2 font-accent" style="font-size:24px;">Diah Restu Sulistia Ningsih, S.Ak</div>
+<div class="editable" style="font-size:14.4px;">Putri Kedua</div>
+</div>
+<div class="editable mb-3 text-center animate__animated animate__fadeIn animate__slower font-photograph-signature" style="font-size:40px;">dengan</div>
+<div class="text-center animate__animated animate__fadeInRight animate__slower" style="position:relative;">
+<div class="editable color-accent h4 mb-2 font-accent" style="font-size:24px;">Didik Marwanto</div>
+<div class="editable mb-1" style="font-size:14.4px;">Putra Kedua</div>
+</div>
+<div class="image-editable mt-3 animate__animated animate__fadeInRight animate__slower" style="height:100px;width:100px;margin:auto;border-radius:100%;overflow:hidden; border: 3px solid var(--inv-accent);">
+<img src="https://assets.satumomen.com/assets/male-1-1687991959.webp" style="width: 100%;height: 100%;object-fit: cover;" alt="Pengantin Pria" />
+</div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center flex-column align-items-center" style="height:100%;">
+<div class="animate__animated animate__fadeInDown animate__slower">
+<div class="image-editable" style="width:158px;height:89px;margin:auto;overflow:hidden;padding-bottom:20px;">
+<img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" alt="Ornamen" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+</div>
+<div class="text-center animate__animated animate__fadeInDown animate__slower">
+<div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Akad Pernikahan ✤</div>
+<div class="editable" style="font-size:14px;">Pukul 08.00 WIB - Selesai</div>
+</div>
+<div class="mt-3 text-center animate__animated animate__zoomIn animate__slower">
+<div class="editable font-latin" style="font-size:50px;line-height:1.2;">Sabtu</div>
+<div class="editable color-accent font-accent" style="font-size:50px;line-height:1.2;">26.12.26</div>
+</div>
+<div class="mt-2 text-center animate__animated animate__zoomIn animate__slower px-4">
+<div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Kediaman Mempelai Wanita ✤</div>
+<div class="editable" style="font-size:14px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div>
+</div>
+<div class="mt-3 image-editable mx-auto animate__animated animate__fadeInUp animate__slower" style="height:auto;width:130px;overflow:hidden;">
+<img src="https://assets.satumomen.com/images/galleries/301467-gallery-FMgCPTNp2h.png" alt="Bunga" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center flex-column align-items-center" style="height:100%;">
+<div class="animate__animated animate__fadeInDown animate__slower">
+<div class="image-editable" style="width:158px;height:89px;margin:auto;overflow:hidden;padding-bottom:20px;">
+<img src="https://assets.satumomen.com/images/galleries/27897-gallery-1672939613.png" alt="Ornamen" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+</div>
+<div class="text-center animate__animated animate__fadeInDown animate__slower">
+<div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Resepsi Pernikahan ✤</div>
+<div class="editable" style="font-size:14px;">Pukul 11.00 WIB - Selesai</div>
+</div>
+<div class="mt-3 text-center animate__animated animate__zoomIn animate__slower">
+<div class="editable font-latin" style="font-size:50px;line-height:1.2;">Sabtu</div>
+<div class="editable color-accent font-accent" style="font-size:50px;line-height:1.2;">26.12.26</div>
+</div>
+<div class="mt-2 text-center animate__animated animate__zoomIn animate__slower px-4">
+<div class="editable color-accent font-weight-bold" style="font-size:14px;">✤ Kediaman Mempelai Wanita ✤</div>
+<div class="editable" style="font-size:14px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div>
+</div>
+<div class="mt-3 image-editable mx-auto animate__animated animate__fadeInUp animate__slower" style="height:auto;width:130px;overflow:hidden;">
+<img src="https://assets.satumomen.com/images/galleries/301467-gallery-FMgCPTNp2h.png" alt="Bunga" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center align-items-center" style="height:100%; padding: 0 15px;">
+<div style="width:100%;">
+<div class="text-center animate__animated animate__fadeInDown animate__slow">
+<div style="font-family: 'javassoul', sans-serif;font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #b88821; text-transform: uppercase; letter-spacing: 1px;">Scan here for location</div>
+<div style="width:100%; max-width: 280px; margin:auto;border-radius:10px;overflow:hidden;margin-bottom:20px;padding-bottom:100%;position:relative;background-color:#ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" class="animate__animated animate__zoomIn animate__slow">
+<img src="https://cdn.yupra.my.id/yp/zu3vsmiw.png" alt="QR Code Lokasi Pernikahan" style="width: 100%; height: 100%; object-fit: contain; border: 0; position: absolute; top: 0; left: 0; padding: 20px;">
+</div>
+<div class="text-center animate__animated animate__fadeInUp animate__slow">
+<div class="editable font-weight-bold" style="font-size:14px;">Kediaman Mempelai Wanita</div>
+<div class="editable mb-3" style="font-size:13px;">Desa Jurangbahas RT/RW, Kec. Wangon, Kab. Banyumas</div>
+<a href="https://maps.app.goo.gl/xLpyjrwHiHwbPVBFA" class="btn-maps-link mx-auto btn btn-primary rounded-pill animate__animated animate__fadeInUp animate__slow" target="_blank" style="gap:8px;max-width:200px; background-color: #b88821; border-color: #b88821; box-shadow: 0 4px 6px rgba(184, 136, 33, 0.3);" rel="noreferrer noopener"><i class="ph-fill ph-map-pin"></i> Petunjuk Ke Lokasi</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center flex-column align-items-center px-2" style="height:100%;">
+<div class="editable font-latin color-accent mb-3 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:40px; margin-top: 10px;">Our Love Story</div>
+<div class="story-wrapper animate__animated animate__fadeInUp animate__slower">
+<div class="timeline-container">
+<div class="timeline-item">
+<div class="timeline-title">Satu Desa</div>
+<p class="timeline-text">Satu desa, beda RT. Satu sekolah, sebangku kenangan. Kita berteman, bermain, tumbuh tanpa rencana. Tanpa tahu kelak akan berbagi nama yang sama.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-title">Dipertemukan Kembali (2019)</div>
+<p class="timeline-text">Semesta mempertemukan kami kembali pada suatu momen. Obrolan kecil tumbuh jadi rasa yang tak kecil lagi. Sejak hari itu, chat tak pernah sepi, intens, nyaman. Dan pelan-pelan jadi rumah.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-title">Tunangan (17 Agustus 2024)</div>
+<p class="timeline-text">Di hari merdeka, Didik memerdekakan hatinya.<br>“Maukah kamu jadi teman hidupku, sampai tua?”<br>Diah mengangguk, dengan seluruh yakin.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-title">Menikah (26 Desember 2026)</div>
+<p class="timeline-text">Bismillah, kami menyatukan dua nama, dua doa.<br>Dari teman kecil yang pernah tak saling sapa, kini jadi teman surga yang tak akan berpisah.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center flex-column align-items-center px-3" style="height:100%;">
+<div class="editable font-latin color-accent mb-3 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:36px; margin-top: 15px;">Momen Pre-wedding</div>
+<div class="gallery-wrapper animate__animated animate__zoomIn animate__slower">
+<!-- Diisi otomatis oleh script dataGaleri di bagian bawah -->
+<div class="gallery-grid" id="galleryGrid"></div>
+</div>
+<div class="text-muted mt-2 animate__animated animate__fadeIn" style="font-size: 11px;">*Geser ke bawah untuk melihat lebih banyak</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center flex-column align-items-center px-4" style="height:100%;">
+<div class="editable font-latin color-accent mb-4 text-center animate__animated animate__fadeInDown animate__slower" style="font-size:36px; animation-delay: 0.3s;">Berikan Ucapan</div>
+<div class="w-100 bg-white p-4 rounded shadow-sm animate__animated animate__fadeInUp animate__slow" style="max-width: 400px; border: 1px solid var(--inv-border); animation-delay: 0.5s;">
+<h6 class="text-center font-weight-bold mb-3" style="color: #49312b;"><span id="totalKomentar">0</span> Ucapaan & Doa</h6>
+<form id="rsvpForm">
+<div class="form-group mb-3"><textarea id="pesanUcapan" class="form-control" rows="3" placeholder="Tulis Ucapan & Doa..." required style="background-color: #f8f9fa; border: 1px solid #ced4da; font-size: 13px;"></textarea></div>
+<div class="form-group mb-3"><select id="statusKehadiran" class="form-control" required style="background-color: #f8f9fa; border: 1px solid #ced4da; color: #6c757d; font-size: 13px;"><option value="" disabled selected>Konfirmasi Kehadiran</option><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
+<button type="submit" class="btn btn-block text-white font-weight-bold" style="background-color: var(--inv-accent); border-radius: 6px;">➤ Kirim Ucapan</button>
+</form>
+<hr class="my-4">
+<div id="commentsList" style="max-height: 250px; overflow-y: auto; text-align: left;"><div class="text-center small text-muted" id="teksKosong">Memuat ucapan...</div></div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="d-flex justify-content-center align-items-center" style="height:100%; padding: 0 15px;">
+<div style="width:100%; max-width: 320px;" class="text-center">
+<div class="font-latin color-accent h4 mb-2 editable animate__animated animate__fadeInDown animate__slower" style="font-size:28.8px;">Tanda Kasih</div>
+<div class="editable mb-4 animate__animated animate__fadeInDown animate__slower" style="font-size:13px; line-height: 1.5;">Terima kasih telah menambah semangat kegembiraan pernikahan kami dengan kehadiran dan hadiah indah Anda.</div>
+<div style="display:flex;gap:8px;width:100%;"><button class="btn-gift btn btn-block btn-primary rounded-pill animate__animated animate__fadeInUp animate__slow" style="width:100%;font-size:14.4px;padding: 12px; background-color: var(--inv-accent); border-color: var(--inv-accent);">Cashless (Kirim Amplop)</button></div>
+<div class="gift-container mt-3 p-4 rounded animate__animated animate__zoomIn animate__slow" style="background: rgba(255,255,255,0.8); border: 1px solid var(--inv-border);">
+<div class="d-flex flex-column align-items-center">
+<div class="d-flex align-items-center mb-3 w-100 justify-content-center"><div style="width:80px;height:50px;overflow:hidden;" class="image-editable bg-white rounded border"><img src="https://assets.satumomen.com/assets/logo-bca-biru-1687975058.png" style="width: 100%;height: 100%;object-fit: contain;" alt="BCA" /></div><div class="text-left pl-3"><div class="editable account-number font-weight-bold h5 mb-0">12345678</div><div class="editable text-muted" style="font-size:12px;">BCA : Atas Nama</div></div></div>
+<div class="d-flex align-items-center w-100 justify-content-center"><div style="width:80px;height:50px;overflow:hidden;" class="image-editable bg-white rounded border"><img src="https://assets.satumomen.com/assets/bni-1704123714.jpg" style="width: 100%;height: 100%;object-fit: contain;" alt="BNI" /></div><div class="text-left pl-3"><div class="editable account-number font-weight-bold h5 mb-0">12345678</div><div class="editable text-muted" style="font-size:12px;">BNI : Atas Nama</div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<!-- SLIDE -->
+<li class="satumomen_slide">
+<div class="container-mobile " style="background-image: url(https://satumomen.com/themes/art-blue-java/bg.webp); ;">
+<div class="frame">
+<img class="frame-tl animate__animated animate__fadeInTopLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/tl.webp" alt="frame">
+<img class="frame-tr animate__animated animate__fadeInTopRight animate__slower" src="https://satumomen.com/themes/art-blue-java/tr.webp" alt="frame">
+<div class="frame-tl w-100 only-cover" style="transform: scale(1.2); transform-origin: top center;"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/gunungan.webp" alt="frame"></div>
+<div class="frame-tl animate__animated animate__fadeInTopLeft animate__slow"><div class="animate-left" style="transform: translate(-5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tl-2.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="frame-tr animate__animated animate__fadeInTopRight animate__slow"><div class="animate-right" style="transform: translate(5%, 145%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/tr-2.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-1.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/sinta.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-bl animate__animated animate__fadeInBottomLeft animate__slow"><div class="animate-left" style="transform: translate(-16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/bl-3.webp" alt="frame" style="transform-origin: bottom left;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(29%, -85%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-1.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(27%, -87%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/rama.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<div class="only-cover frame-br animate__animated animate__fadeInBottomRight animate__slow"><div class="animate-right" style="transform: translate(16%, -70%);"><img class="w-100" src="https://satumomen.com/themes/art-blue-java/br-3.webp" alt="frame" style="transform-origin: bottom right;"></div></div>
+<img class="frame-br w-100 animate__animated animate__fadeInUp animate__slower" src="https://satumomen.com/themes/art-blue-java/bm.webp" alt="frame" style="animation-delay: 1s;">
+<img class="frame-bl animate__animated animate__fadeInLeft animate__slower" src="https://satumomen.com/themes/art-blue-java/bl-2.webp" alt="frame">
+<img class="frame-br animate__animated animate__fadeInRight animate__slower" src="https://satumomen.com/themes/art-blue-java/br-2.webp" alt="frame">
+</div>
+<div class="watermark d-flex flex-column" style="height:100%; padding: 0 15px;">
+<div class="mt-auto w-100 text-center">
+<div class="editable mb-3 animate__animated animate__fadeInDown animate__slower" style="font-size:14px; line-height: 1.6;">Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do'a restu kepada kedua mempelai.</div>
+<div class="editable mb-4 animate__animated animate__fadeInDown animate__slower color-accent font-weight-bold" style="font-size:16px;">Wassalamu'alaikum Warahmatullahi Wabarakatuh</div>
+<div class="text-center d-flex align-items-center justify-content-center animate__animated animate__fadeInDown animate__slow" style="gap:20px;line-height:1.2;">
+<div><div class="editable text-muted" style="font-size:12px; margin-bottom: 5px;">Keluarga Bpk.</div><div class="editable font-weight-bold" style="font-size:14px;">Nama Ayah<br />& Ibu Diah</div></div>
+<div><div class="editable text-muted" style="font-size:12px; margin-bottom: 5px;">Keluarga Bpk.</div><div class="editable font-weight-bold" style="font-size:14px;">Nama Ayah<br />& Ibu Didik</div></div>
+</div>
+</div>
+<div class="watermark-placeholder text-center mb-auto mb-5 pb-5"></div>
+</div>
+</div>
+</li>
                                 </ul>
                             </div>
                         </div>
 
                         <div id="smMenu" class="satumomen_menu">
-                            <!-- Menu List Dipertahankan Sesuai Sistem -->
                             <ul class="satumomen_menu_list">
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-envelope" style="color:currentColor;"></i><span>Opening</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-star-and-crescent" style="color:currentColor;"></i><span>Greeting</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-article" style="color:currentColor;"></i><span>Quotes</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-heart" style="color:currentColor;"></i><span>Mempelai</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-clock" style="color:currentColor;"></i><span>Akad</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-clock" style="color:currentColor;"></i><span>Resepsi</span></li>
-                                <li class="satumomen_menu_item"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.532 2.937a6.89 6.89 0 0 1 7.034.058C17.71 4.327 19.012 6.705 19 9.26c-.05 2.54-1.447 4.929-3.193 6.775a18.727 18.727 0 0 1-3.358 2.82 1.173 1.173 0 0 1-.408.144.82.82 0 0 1-.39-.119 18.515 18.515 0 0 1-4.839-4.547A9.28 9.28 0 0 1 5 9.134c-.001-2.562 1.347-4.928 3.532-6.197Zm1.262 7.258a2.378 2.378 0 0 0 2.198 1.497 2.339 2.339 0 0 0 1.683-.701c.446-.454.696-1.07.694-1.713a2.423 2.423 0 0 0-1.462-2.243 2.346 2.346 0 0 0-2.594.52 2.455 2.455 0 0 0-.519 2.64Z" fill="currentColor"/><ellipse opacity=".4" cx="12" cy="21" rx="5" ry="1" fill="currentColor"/></svg><span>Maps</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-book-open" style="color:currentColor;"></i><span>Cerita</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-camera" style="color:currentColor;"></i><span>Galeri</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-chat-circle-text" style="color:currentColor;"></i><span>RSVP</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-gift" style="color:currentColor;"></i><span>Gift</span></li>
-                                <li class="satumomen_menu_item"><i class="icon ph-fill ph-mosque" style="color:currentColor;"></i><span>Thanks</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-envelope" style="color:currentColor;"></i><span>Opening</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-star-and-crescent" style="color:currentColor;"></i><span>Greeting</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-article" style="color:currentColor;"></i><span>Quotes</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-heart" style="color:currentColor;"></i><span>Mempelai</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-clock" style="color:currentColor;"></i><span>Akad</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-clock" style="color:currentColor;"></i><span>Resepsi</span></li>
+<li class="satumomen_menu_item"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.532 2.937a6.89 6.89 0 0 1 7.034.058C17.71 4.327 19.012 6.705 19 9.26c-.05 2.54-1.447 4.929-3.193 6.775a18.727 18.727 0 0 1-3.358 2.82 1.173 1.173 0 0 1-.408.144.82.82 0 0 1-.39-.119 18.515 18.515 0 0 1-4.839-4.547A9.28 9.28 0 0 1 5 9.134c-.001-2.562 1.347-4.928 3.532-6.197Zm1.262 7.258a2.378 2.378 0 0 0 2.198 1.497 2.339 2.339 0 0 0 1.683-.701c.446-.454.696-1.07.694-1.713a2.423 2.423 0 0 0-1.462-2.243 2.346 2.346 0 0 0-2.594.52 2.455 2.455 0 0 0-.519 2.64Z" fill="currentColor"/><ellipse opacity=".4" cx="12" cy="21" rx="5" ry="1" fill="currentColor"/></svg><span>Maps</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-book-open" style="color:currentColor;"></i><span>Cerita</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-camera" style="color:currentColor;"></i><span>Galeri</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-chat-circle-text" style="color:currentColor;"></i><span>RSVP</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-gift" style="color:currentColor;"></i><span>Gift</span></li>
+<li class="satumomen_menu_item"><i class="icon ph-fill ph-mosque" style="color:currentColor;"></i><span>Thanks</span></li>
                             </ul>
                         </div>
 
@@ -711,8 +642,33 @@
             }
         });
     </script>
+
+    <!-- DATA FOTO GALERI (11 foto dari folder images/, tanpa IMG_7233 & IMG_7238) -->
+    <script type="text/javascript">
+        const dataGaleri = [
+            "images/IMG_7157.JPG",
+            "images/IMG_7180.JPG",
+            "images/IMG_7181.JPG",
+            "images/IMG_7196.JPG",
+            "images/IMG_7199.JPG",
+            "images/IMG_7203.JPG",
+            "images/IMG_7207.JPG",
+            "images/IMG_7215.JPG",
+            "images/IMG_7220.JPG",
+            "images/IMG_7221.JPG",
+            "images/IMG_7224.JPG"
+        ];
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
+            grid.innerHTML = dataGaleri.map(function (src, i) {
+                return '<div class="gallery-item"><img src="' + src + '" alt="Prewedding ' + (i + 1) + '" loading="lazy"></div>';
+            }).join('');
+        });
+    </script>
     
-    <!-- SCRIPT RSVP / KOMENTAR (DIREVISI MENJADI KOTAK CARD) -->
+    <!-- SCRIPT RSVP / KOMENTAR -->
     <script type="text/javascript">
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-AGvaJ0DtavI1egAi2JsEfgTWpzegoqEjwNe52OxKK4CPXowp3R8ZOHKw6zq-lDeZ4A/exec'; 
         const NOMOR_WA_PENGANTIN = '6285178399532';
@@ -735,7 +691,6 @@
                         commentsList.innerHTML = '';
                         totalKomentar.innerText = data.length;
                         data.reverse().forEach(item => {
-                            // FORMAT CARD KOMENTAR
                             commentsList.innerHTML += `
                                 <div class="comment-box">
                                     <div class="d-flex align-items-center">
