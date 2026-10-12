@@ -127,6 +127,24 @@
             pointer-events: none !important;
         }
     </style>
+    <script>
+        // Jika foto gagal dimuat dari images/, coba lokasi lain secara otomatis
+        function fotoCoba(el) {
+            var f = el.getAttribute('data-f');
+            var nama = [f, f.replace(/\.JPG$/, '.jpg')];
+            var folder = ['images/', '/diah-didik/images/', '/images/', '/diah-didik/', '', 'foto/', '/foto/'];
+            if (!el._c) {
+                el._c = [];
+                folder.forEach(function (d) { nama.forEach(function (n) { el._c.push(d + n); }); });
+                el._i = 0;
+            }
+            while (el._i < el._c.length) {
+                var u = el._c[el._i++];
+                if (el.getAttribute('src') !== u) { el.src = u; return; }
+            }
+            el.onerror = null;
+        }
+    </script>
 </head>
 
 <body>
@@ -454,17 +472,17 @@
 <div class="gallery-wrapper animate__animated animate__zoomIn animate__slower">
 <!-- Diisi otomatis oleh script dataGaleri di bagian bawah -->
 <div class="gallery-grid">
-                    <div class="gallery-item"><img src="images/IMG_7157.JPG" alt="Prewedding 1" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7180.JPG" alt="Prewedding 2" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7181.JPG" alt="Prewedding 3" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7196.JPG" alt="Prewedding 4" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7199.JPG" alt="Prewedding 5" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7203.JPG" alt="Prewedding 6" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7207.JPG" alt="Prewedding 7" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7215.JPG" alt="Prewedding 8" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7220.JPG" alt="Prewedding 9" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7221.JPG" alt="Prewedding 10" decoding="async"></div>
-                    <div class="gallery-item"><img src="images/IMG_7224.JPG" alt="Prewedding 11" decoding="async"></div>
+                    <div class="gallery-item"><img src="images/IMG_7157.JPG" data-f="IMG_7157.JPG" alt="Prewedding 1" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7180.JPG" data-f="IMG_7180.JPG" alt="Prewedding 2" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7181.JPG" data-f="IMG_7181.JPG" alt="Prewedding 3" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7196.JPG" data-f="IMG_7196.JPG" alt="Prewedding 4" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7199.JPG" data-f="IMG_7199.JPG" alt="Prewedding 5" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7203.JPG" data-f="IMG_7203.JPG" alt="Prewedding 6" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7207.JPG" data-f="IMG_7207.JPG" alt="Prewedding 7" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7215.JPG" data-f="IMG_7215.JPG" alt="Prewedding 8" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7220.JPG" data-f="IMG_7220.JPG" alt="Prewedding 9" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7221.JPG" data-f="IMG_7221.JPG" alt="Prewedding 10" decoding="async" onerror="fotoCoba(this)"></div>
+                    <div class="gallery-item"><img src="images/IMG_7224.JPG" data-f="IMG_7224.JPG" alt="Prewedding 11" decoding="async" onerror="fotoCoba(this)"></div>
                 </div>
 </div>
 <div class="text-muted mt-2 animate__animated animate__fadeIn" style="font-size: 11px;">*Geser ke bawah untuk melihat lebih banyak</div>
