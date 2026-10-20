@@ -112,6 +112,28 @@
             background: #eee;
             border: 2px solid var(--inv-border);
         }
+        /* LIGHTBOX FOTO GALERI */
+        .gallery-item { cursor: zoom-in; }
+        #fotoViewer {
+            position: fixed; inset: 0; z-index: 99999;
+            background: rgba(0,0,0,0.92);
+            display: none; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; transition: opacity .25s ease;
+        }
+        #fotoViewer.tampil { display: flex; }
+        #fotoViewer.terlihat { opacity: 1; }
+        #fotoViewer img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        #fotoViewerTutup {
+            position: absolute; top: 14px; right: 14px;
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 0; background: rgba(255,255,255,0.18); color: #fff;
+            font-size: 24px; line-height: 40px; text-align: center; cursor: pointer;
+        }
         .gallery-item img { width: 100%; height: auto; display: block; }
 
         /* COMMENT BOX */
@@ -662,6 +684,10 @@ Kab. Banyumas, Jawa Tengah
         <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModal" aria-hidden="true"></div>
         <div class="modal fade" id="rsvpModal" tabindex="-1" role="dialog" aria-labelledby="rsvpModal"></div>
         <div id="waterMark" class="mt-5" style="display: none"></div>
+		<div id="fotoViewer">
+            <button id="fotoViewerTutup" aria-label="Tutup">&times;</button>
+            <img id="fotoViewerImg" src="" alt="Foto prewedding">
+		</div>
     </main>
 
     <div id="illegal" class="container-mobile" style="background: #ffffff; z-index: 9999; min-height: 100vh; display: flex; justify-content: center; align-items: center; display: none">
@@ -789,5 +815,42 @@ Kab. Banyumas, Jawa Tengah
             document.getElementById('rsvpForm').reset();
         }); 
     </script>
+	<script>
+    (function () {
+        var viewer = document.getElementById('fotoViewer');
+        var gambar = document.getElementById('fotoViewerImg');
+
+        function buka(src) {
+            gambar.src = src;
+            viewer.classList.add('tampil');
+            requestAnimationFrame(function () { viewer.classList.add('terlihat'); });
+        }
+
+        function tutup() {
+            viewer.classList.remove('terlihat');
+            setTimeout(function () {
+                viewer.classList.remove('tampil');
+                gambar.src = '';
+            }, 250);
+        }
+
+        // klik foto galeri -> tampil penuh
+        document.addEventListener('click', function (e) {
+            var foto = e.target.closest('.gallery-item img');
+            if (foto) { e.preventDefault(); buka(foto.currentSrc || foto.src); }
+        });
+
+        // klik di mana saja / tombol X / tombol Esc -> tutup
+        viewer.addEventListener('click', tutup);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') tutup();
+        });
+
+        // cegah slide undangan ikut bergeser saat foto dibuka
+        ['touchstart', 'touchmove', 'wheel'].forEach(function (ev) {
+            viewer.addEventListener(ev, function (e) { e.stopPropagation(); }, { passive: false });
+        });
+    })();
+	</script>
 </body>
 </html>
